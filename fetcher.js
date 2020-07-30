@@ -9,10 +9,12 @@ let urls = process.argv.slice(2);
 
 const fileName = 'hello.html'
 
+
+// the function gets URL and passes it to request and writes response body to index.html
 request(`${urls[0]}${urls[1]}`, (error, response, body) => {
   //console.log('error:', error); // Print the error if one occurred
+  // const status = response && response.statusCode;
 
-  const status = response && response.statusCode;
   const htmlBody = body;
   fs.writeFile(fileName, htmlBody, function(err) {
     if (err) return console.log(err);

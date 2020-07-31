@@ -1,30 +1,26 @@
 const request = require('request');
-
 const fs = require('fs');
 
 
 
-let urls = process.argv.slice(2); 
+const website = process.argv.slice(2)[0]; //website = string
+const path = process.argv.slice(3)[0];  //file storage path = string
 
-
-const fileName = 'hello.html'
 
 
 // the function gets URL and passes it to request and writes response body to index.html
-request(`${urls[0]}${urls[1]}`, (error, response, body) => {
-  //console.log('error:', error); // Print the error if one occurred
-  // const status = response && response.statusCode;
+request(website, (error, response, body) => {
+  console.log('error:', error); // Print the error if one occurred
+  const status = response && response.statusCode;
 
   const htmlBody = body;
-  fs.writeFile(fileName, htmlBody, function(err) {
+  fs.writeFile(path, htmlBody, function(err) {
     if (err) return console.log(err);
     let size = getSize(fileName);
-    console.log(`Downloaded and saved ${size} bytes to ./${fileName}`)
+    console.log(`Downloaded and saved ${size} bytes to ./${path}`)
 
   })
-  // console.log('statusCode:', response && response.statusCode); 
-  // Print the response status code if a response was received
-  //console.log('body:', body); // Print the HTML for the Google homepage.
+
 });
 
 
@@ -35,3 +31,4 @@ const getSize = function(fname) {
   let fileSize = stats['size'];
   return fileSize;
 }
+
